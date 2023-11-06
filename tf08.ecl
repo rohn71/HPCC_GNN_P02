@@ -15,6 +15,17 @@ tensdata := Tensor.R4.tensData;
 
 EXPORT tf08 := MODULE
 
+    // Overview:
+    // This module tends towards the input, output and manipulation of images pertaining to neural network applications.  
+    // This makes sure that the users of GNN do not spend time trying to preprocess the image database, 
+    // as the images to be processed are read and generates the corresponding ECL tensors. 
+    
+    // The module is capable of taking datasets of images sprayed as a blob, usually with the prefix: [filename,filesize]
+    // This dataset sprayed is taken to obtain the image matrix so as to be sent to the neural network. 
+    // This module handles the preprocessing. It can convert records containing images as byte data into Tensor data 
+    //to be able to use for conversion into a tensor and train the neural network using the tensor.  
+    //ACTIVITY is used to run the python program in all the nodes
+
 
     EXPORT STREAMED DATASET(tensdata) pyConvertImages(STREAMED DATASET(Types.ImgRec) imgs, INTEGER theight, INTEGER twidth, INTEGER tchannel, INTEGER tmode) := EMBED(Python:activity)
         import numpy
@@ -262,6 +273,11 @@ EXPORT tf08 := MODULE
             assert False, exc
     ENDEMBED;
 
+
+    //This fuction will Distribute the images received in ImgRec format equally to all nodes
+    //with multiple nodes running, timing of execution can be different for each, therefore tensors_s is declared with SORT,
+    //so that to put back the slices returned to its canonical order.
+
     EXPORT DATASET(t_Tensor) convertImages(DATASET(Types.ImgRec) images, INTEGER targetheight, INTEGER targetwidth, INTEGER targetchannel, INTEGER transform_mode) := FUNCTION
         recspernode0 := COUNT(images)/nNodes;
         recspernode := IF(recspernode0 = TRUNCATE(recspernode0), recspernode0, TRUNCATE(recspernode0 + 1));
@@ -275,10 +291,5 @@ EXPORT tf08 := MODULE
 
     END;
 
-    // EXPORT DATASET(t_Tensor) stackTensors(DATASET tensors_s) := FUNCTION
-    //     tensors_s := SORT(tensors,wi,sliceId);
-    //     return tensors_s;
-
-    //EXPORT STREAMED DATASET(t_Tensor) pyConvertImages(STREAMED DATASET(Types.ImgRec) imgs) := EMBED(Python:activity)
 
 END;
