@@ -304,20 +304,20 @@ EXPORT tf08 := MODULE
 
 
     EXPORT DATASET(t_Tensor) convertImages(DATASET(Types.ImgRec) images, INTEGER targetheight, INTEGER targetwidth, INTEGER targetchannel, INTEGER transform_mode) := FUNCTION
-        //This is the driver function
-        //This function takes Image Dataset in ImgRec fromat, the target height of the image, target width of the image, target channel of the image and the image transformation operation as the parameter
-        //The fuction first calculates the number of records per node. COUNT(images) counts the number of records in the images dataset, and nNodes represents the total number of nodes in the cluster. It calculates the number of records per node (recspernode) based on whether the division result is an integer (TRUNCATE) or not.
+        //This is the driver function.
+        //This function takes Image Dataset in ImgRec format, the target height of the image, target width of the image, target channel of the image and the image transformation operation as the parameter.
+        //The fuction first calculates the number of records per node. COUNT(images) counts the number of records in the images dataset, and nNodes represents the total number of nodes in the cluster. It calculates the number of records per node based on whether the division result is an integer or not.
         //The DISTRIBUTE function is used to distribute the dataset according to the formula "(id-1) DIV recspernode". 'id' is a built-in ECL variable representing the node ID. The formula divides the records to availaible nodes.
-        //'pyConvertImages' is then called with the distributed imagesD dataset and the specified target dimensions and transformation mode. The result is assigned to td0.
-        //It then transorms td0 dataset, It modifies the indexes field of each record based on the node and recspernode. The SELF:=LEFT part maintains the other fields of the record.
-        //It creates a 4D tensor (tensor) using the MakeTensor function. The tensor has a shape of [0, targetheight, targetwidth, targetchannel] and is constructed from the sorted td_s dataset. wi := 1 specifies the width of the dataset.
+        //'pyConvertImages' is then called with the distributed 'imagesD' dataset and the specified target dimensions and transformation mode. The result is assigned to td0.
+        //It then transorms td0 dataset, It modifies the indexes field of each record based on the node and recspernode. The "SELF:=LEFT" part maintains the other fields of the record.
+        //It creates a 4D tensor using the MakeTensor function. The tensor has a shape of [0, targetheight, targetwidth, targetchannel] and is constructed from the sorted td_s dataset. wi := 1 specifies the width of the dataset.
+        //The function returns the resulting ECL tensor
         recspernode0 := COUNT(images)/nNodes;
         recspernode := IF(recspernode0 = TRUNCATE(recspernode0), recspernode0, TRUNCATE(recspernode0 + 1));
         imagesD := DISTRIBUTE(images,(id-1) DIV recspernode);
         td0 := pyConvertImages(imagesD,targetheight,targetwidth,targetchannel,transform_mode);
         td := PROJECT(td0,TRANSFORM(RECORDOF(LEFT),SELF.indexes:= [node*recspernode+LEFT.indexes[1],LEFT.indexes[2],LEFT.indexes[3],LEFT.indexes[4]], SELF:=LEFT));
         td_s := SORT(td, indexes);
-        //shape := [0, target_height, target_channels];
         tensor := Tensor.R4.MakeTensor( [0,targetheight,targetwidth,targetchannel] ,td_s, wi := 1);
         return tensor;
 
