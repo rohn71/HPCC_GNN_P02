@@ -192,6 +192,16 @@ EXPORT tf08 := MODULE
             return image_tensor
 
         def _Np2Tens(a, wi=0, maxSliceOverride=0, isWeights = False):
+            # Defines data type dictionaries and constants
+            # Initialize variables
+            # Determines the data type and element size
+            # Calculates the maximum slice size
+            # Handles special cases for weights synchronization
+            # Iterates through the input array and yield tensor slices
+            # Iterates through the input array and yield tensor slices
+            # Slices can be dense or sparse, depending on the density of non-zero elements
+
+
             #   dTypeDict is used to convey the data type of a tensor.  It must be
             #   kept in sync with the Tensor data types in Tensor.ecl
             dTypeDict = {1:numpy.float32, 2:numpy.float64, 3:numpy.int32, 4:numpy.int64}
