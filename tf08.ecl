@@ -63,16 +63,11 @@ EXPORT tf08 := MODULE
             scale_factor_w = tf.cast(target_width / image_shape[1], tf.float32)
             #image_channels = tf.cast(image_shape[-1], tf.int32)
             scale_factor = tf.minimum(scale_factor_h, scale_factor_w)
-
-            #adjusted_channel = adjust_channels(image_channels, target_channel, preserve_alpha=True)
-            #print(new_channel)
-
             # Resize the image maintaining aspect ratio
             new_height = tf.cast(scale_factor * tf.cast(image_shape[0], tf.float32), tf.int32)
             new_width = tf.cast(scale_factor * tf.cast(image_shape[1], tf.float32), tf.int32)
             #new_channel = tf.cast(adjusted_channel[-1], tf.int32)
             image = resize_image(image, (new_height, new_width))
-
             # Pad or crop the image to match the desired size
             image = tf.image.pad_to_bounding_box(image, 0, 0, target_height, target_width)
 
