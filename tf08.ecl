@@ -270,6 +270,21 @@ EXPORT tf08 := MODULE
         Np2Tens = _Np2Tens
 
         def generateTensors(imageRecs):
+#Process a list of image records, transforming them into tensors with associated indexes.
+#This function iterates through a list of image records, where each record includes an ID, filename, and image data.
+#It performs a series of operations, including resizing, channel adjustment, and flattening, to convert each image
+#into a tensor. The resulting tensors are associated with specific indexes, such as row, column, and channel,
+#to enable efficient data analysis.
+#Parameters:
+#- imageRecs: A list of image records, each containing an ID, filename, and image data.
+#Yields:
+#- Tensors with corresponding indexes, one at a time, to facilitate further processing.
+#Details:
+#- The function applies a user-specified method for image processing (e.g., 'fit') and uses target dimensions and offsets.
+#- It converts image data from bytes to a TensorFlow image format, making it suitable for processing.
+#- The function ensures that images are resized, channels adjusted, and flattened for tensor conversion.
+#- Indexes for each value in the tensor are provided to organize the data efficiently.
+
             #method = "fit"  # Replace with your desired method
             target_size = (theight, twidth, tchannel)
             offset = -25  # Replace with your desired offset
