@@ -44,13 +44,12 @@ EXPORT tf08 := MODULE
         image_tensors = []
 
         def resize_image(image, target_size):
- 
- #  Resize the input image to the specified target size using TensorFlow.  
- # Parameters:
- # - image: Input image to be resized.
- #  - target_size: A tuple (height, width) representing the desired dimensions for the image.   
- #  Returns:
- #   - Resized image with the specified dimensions.
+             #  Resize the input image to the specified target size using TensorFlow.  
+             # Parameters:
+             # - image: Input image to be resized.
+             #  - target_size: A tuple (height, width) representing the desired dimensions for the image.   
+             #  Returns:
+             #   - Resized image with the specified dimensions.
  
             image = tf.image.resize(image, target_size,preserve_aspect_ratio=False)
             return image
@@ -58,14 +57,13 @@ EXPORT tf08 := MODULE
 
         
         def crop_fill(image, target_size):
-
-#Resize and crop the input image to the specified target size using TensorFlow.
-
-#Parameters:
-# - image: Input image to be cropped and resized.
-# - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
-#  Returns:
-# - Resized and cropped image with the specified dimensions.
+            #Resize and crop the input image to the specified target size using TensorFlow.
+            
+            #Parameters:
+            # - image: Input image to be cropped and resized.
+            # - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
+            #  Returns:
+            # - Resized and cropped image with the specified dimensions.
 
             image_shape = tf.shape(image)[:2]
             target_height, target_width, target_channel = target_size
@@ -77,15 +75,14 @@ EXPORT tf08 := MODULE
 
 
         def fit(image, target_size):
- 
-#    Resize and fit the input image to the specified target size using TensorFlow.
-
-#   Parameters:
-#    - image: Input image to be resized and fitted.
-#   - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
-
-# Returns:
-# - Resized and fitted image with the specified dimensions.
+            #    Resize and fit the input image to the specified target size using TensorFlow.
+            
+            #   Parameters:
+            #    - image: Input image to be resized and fitted.
+            #   - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
+            
+            # Returns:
+            # - Resized and fitted image with the specified dimensions.
             image_shape = tf.shape(image)
             target_height, target_width , target_channel = target_size
             scale_factor_h = tf.cast(target_height / image_shape[0], tf.float32)
@@ -99,12 +96,12 @@ EXPORT tf08 := MODULE
 
 
         def fitv(image, target_size):
-#   Vertically resize and fit the input image to the specified target size using TensorFlow.
-#  Parameters:
-#   - image: Input image to be vertically resized and fitted.
-#  - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
-# Returns:
-#- Vertically resized and fitted image with the specified dimensions.
+            #   Vertically resize and fit the input image to the specified target size using TensorFlow.
+            #  Parameters:
+            #   - image: Input image to be vertically resized and fitted.
+            #  - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
+            # Returns:
+            #- Vertically resized and fitted image with the specified dimensions.
     
 
             image_shape = tf.shape(image)[:2]
@@ -116,13 +113,12 @@ EXPORT tf08 := MODULE
             return image
 
         def fith(image, target_size):
-
-#    Horizontally resize and fit the input image to the specified target size using TensorFlow.
-#    Parameters:
-#  - image: Input image to be horizontally resized and fitted.
-#  - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
-#    Returns:
-# - Horizontally resized and fitted image with the specified dimensions.
+            #    Horizontally resize and fit the input image to the specified target size using TensorFlow.
+            #    Parameters:
+            #  - image: Input image to be horizontally resized and fitted.
+            #  - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
+            #    Returns:
+            # - Horizontally resized and fitted image with the specified dimensions.
 
             image_shape = tf.shape(image)[:2]
             target_height, target_width, target_channel = target_size
@@ -134,14 +130,13 @@ EXPORT tf08 := MODULE
 
 
         def adjust_channels(image, target_channels, preserve_alpha=True):
-
-# Adjust the number of channels in the input image according to the specified target_channels using TensorFlow.
-#Parameters:
-# - image: Input image to be adjusted.
-# - target_channels: The desired number of channels for the output image.
-# - preserve_alpha: A boolean indicating whether to preserve the alpha channel if applicable.
-#  Returns:
-# - Image with the specified number of channels and optional preservation of the alpha channel.
+            # Adjust the number of channels in the input image according to the specified target_channels using TensorFlow.
+            #Parameters:
+            # - image: Input image to be adjusted.
+            # - target_channels: The desired number of channels for the output image.
+            # - preserve_alpha: A boolean indicating whether to preserve the alpha channel if applicable.
+            #  Returns:
+            # - Image with the specified number of channels and optional preservation of the alpha channel.
 
             num_channels = image.shape[-1]
             if num_channels == 1 and target_channels == 3:
@@ -168,14 +163,14 @@ EXPORT tf08 := MODULE
 
 
         def process_image(image_array, method, target_size):
-#    Process an image array using a specified method to achieve the desired target size.
-#   Parameters:
-#    - image_array: Input image as an array.
-#    - method: An integer representing the processing method (1 for crop_fill, 2 for fit, 3 for fitv, 4 for fith).
-#    - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
-
-#   Returns:
-#    - Processed image tensor with the specified dimensions based on the chosen method.
+            #    Process an image array using a specified method to achieve the desired target size.
+            #   Parameters:
+            #    - image_array: Input image as an array.
+            #    - method: An integer representing the processing method (1 for crop_fill, 2 for fit, 3 for fitv, 4 for fith).
+            #    - target_size: A tuple (height, width, channel) representing the desired dimensions for the image.
+            
+            #   Returns:
+            #    - Processed image tensor with the specified dimensions based on the chosen method.
  
             image_tensor = tf.convert_to_tensor(image_array, dtype=tf.float32)
             switcher = {
@@ -270,22 +265,21 @@ EXPORT tf08 := MODULE
         Np2Tens = _Np2Tens
 
         def generateTensors(imageRecs):
-#Process a list of image records, transforming them into tensors with associated indexes.
-#This function iterates through a list of image records, where each record includes an ID, filename, and image data.
-#It performs a series of operations, including resizing, channel adjustment, and flattening, to convert each image
-#into a tensor. The resulting tensors are associated with specific indexes, such as row, column, and channel,
-#to enable efficient data analysis.
-#Parameters:
-#- imageRecs: A list of image records, each containing an ID, filename, and image data.
-#Yields:
-#- Tensors with corresponding indexes, one at a time, to facilitate further processing.
-#Details:
-#- The function applies a user-specified method for image processing (e.g., 'fit') and uses target dimensions and offsets.
-#- It converts image data from bytes to a TensorFlow image format, making it suitable for processing.
-#- The function ensures that images are resized, channels adjusted, and flattened for tensor conversion.
-#- Indexes for each value in the tensor are provided to organize the data efficiently.
+            #Process a list of image records, transforming them into tensors with associated indexes.
+            #This function iterates through a list of image records, where each record includes an ID, filename, and image data.
+            #It performs a series of operations, including resizing, channel adjustment, and flattening, to convert each image
+            #into a tensor. The resulting tensors are associated with specific indexes, such as row, column, and channel,
+            #to enable efficient data analysis.
+            #Parameters:
+            #- imageRecs: A list of image records, each containing an ID, filename, and image data.
+            #Yields:
+            #- Tensors with corresponding indexes, one at a time, to facilitate further processing.
+            #Details:
+            #- The function applies a user-specified method for image processing (e.g., 'fit') and uses target dimensions and offsets.
+            #- It converts image data from bytes to a TensorFlow image format, making it suitable for processing.
+            #- The function ensures that images are resized, channels adjusted, and flattened for tensor conversion.
+            #- Indexes for each value in the tensor are provided to organize the data efficiently.
 
-            #method = "fit"  # Replace with your desired method
             target_size = (theight, twidth, tchannel)
             offset = -25  # Replace with your desired offset
             imgs = 0
@@ -331,12 +325,18 @@ EXPORT tf08 := MODULE
     EXPORT DATASET(t_Tensor) convertImages(DATASET(Types.ImgRec) images, INTEGER targetheight, INTEGER targetwidth, INTEGER targetchannel, INTEGER transform_mode) := FUNCTION
         //This is the driver function.
         //This function takes Image Dataset in ImgRec format, the target height of the image, target width of the image, target channel of the image and the image transformation operation as the parameter.
+        //The last parameter "transform mode" passed to the function takes integer values which corresponds to the following:-
+        //  1: crop_fill,
+        //  2: fit,
+        //  3: fitv,
+        //  4: fith
         //The fuction first calculates the number of records per node. COUNT(images) counts the number of records in the images dataset, and nNodes represents the total number of nodes in the cluster. It calculates the number of records per node based on whether the division result is an integer or not.
         //The DISTRIBUTE function is used to distribute the dataset according to the formula "(id-1) DIV recspernode". 'id' is a built-in ECL variable representing the node ID. The formula divides the records to availaible nodes.
         //'pyConvertImages' is then called with the distributed 'imagesD' dataset and the specified target dimensions and transformation mode. The result is assigned to td0.
         //It then transorms td0 dataset, It modifies the indexes field of each record based on the node and recspernode. The "SELF:=LEFT" part maintains the other fields of the record.
         //It creates a 4D tensor using the MakeTensor function. The tensor has a shape of [0, targetheight, targetwidth, targetchannel] and is constructed from the sorted td_s dataset. wi := 1 specifies the width of the dataset.
         //The function returns the resulting ECL tensor
+        
         recspernode0 := COUNT(images)/nNodes;
         recspernode := IF(recspernode0 = TRUNCATE(recspernode0), recspernode0, TRUNCATE(recspernode0 + 1));
         imagesD := DISTRIBUTE(images,(id-1) DIV recspernode);
