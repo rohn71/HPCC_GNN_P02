@@ -18,7 +18,9 @@ Optimization of ECL Tensors
 
 
 ### Workflow
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
+![The flow of the process of ImageCoverter Module.]()
+
+The process begins with spraying the image dataset onto the cluster provided by HPCC systems which are stored as BLOB (Binary Large Object) and then passed to the ImageConverter Module where the conversion to required ECL Tensors with appropriate image transformation operation happens, which later can be used by various machine learning models.
 
 
 ### Input and Output
