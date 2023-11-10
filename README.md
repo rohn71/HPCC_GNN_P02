@@ -93,7 +93,8 @@ ecl bundle install https://github.com/hpcc-systems/GNN.git
 ecl run thor Setup.ecl
 ```
 
-4) Now that the dependencies have been taken care of, we can run test1.ecl on thor, before that pass the logical filename to ```ds``` , as in ```.
+4) Now that the dependencies have been taken care of, we can run ```test1.ecl``` on thor, before that pass the logical filename to ```ds``` , as in ```ds := DATASET('poke100.flat', rawImageRec, THOR)```, where ```poke100``` is the logical filename.
+
  ```
 ecl run thor test1.ecl
 ```
