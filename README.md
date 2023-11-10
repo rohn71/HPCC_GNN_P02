@@ -24,6 +24,14 @@ The process begins with spraying the image dataset onto the cluster provided by 
 
 
 ### Input and Output
+- BLOB sprayed Image Dataset is passed as the input to the module, Two datasets have been used. The [first dataset](https://www.kaggle.com/datasets/rounakbanik/pokemon)
+consists of 809 images all in JPEG and PNG format and to
+scale the working of the module [second dataset](https://www.kaggle.com/datasets/muratkokludataset/rice-image-dataset) is used
+which contains 2000 JPEG and BMP formatted images.
+
+- The Output aim to generate a stack of the resized images tensors  into a single 4D tenor which is easier for training artificial neural networks.
+  
+
 
 
 
