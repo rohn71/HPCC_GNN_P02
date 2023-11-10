@@ -43,6 +43,13 @@ The process begins with spraying the image dataset onto the cluster provided by 
 3) #### test1.ecl
    The code processes and transform image data within the context of a Graph Neural Network (GNN) framework. It begins by defining a record structure for images and creating a dataset from a flat file. The code then transforms this dataset, assigning sequential IDs to records while preserving other attributes. Subsequently, it invokes the 'convertImages' module from the 'tf08' module, which is designed for image processing. The module takes the transformed dataset as input, specifying target dimensions and a transformation mode. The output is a tensor dataset representing processed images. Overall, the code demonstrates a pipeline for handling image data, from initial record transformation to invoking a specialized module for image processing within the GNN framework.
 
+### Python Libraries Required
+- Matplotlib
+- Tensorflow
+- numpy
+- io
+- math
+
 
 ## Input and Output
 - BLOB sprayed Image Dataset is passed as the input to the module, Two datasets have been used. The [first dataset](https://www.kaggle.com/datasets/vishalsubbiah/pokemon-images-and-types)
