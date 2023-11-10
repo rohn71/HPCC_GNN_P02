@@ -33,3 +33,22 @@ Optimization of ECL Tensors
 
 
 ### Deployment
+
+Assuming that HPCC cluster is up and running in your computer: -
+
+Install ML Core as an ECL bundle by running the below in your terminal or command prompt.
+
+ ecl bundle install https://github.com/hpcc-systems/ML_Core.git
+Install Generalised Neural Networks bundle by running the below in your terminal or command prompt.
+
+ ecl bundle install https://github.com/hpcc-systems/GNN.git
+To make sure and also install the required python3 dependencies, please run the Setup.ecl file by running the below command.
+
+ ecl run thor Setup.ecl
+Now that the dependencies have been taken care of, install the current bundle by cloning this repository and running the below command
+
+ ecl bundle install GAN
+You run it by executing the following command if HPCC systems platform is running on server: -
+
+ ecl run thor <filename>
+This should enable you to use the GAN train function given the dataset appropriately.
